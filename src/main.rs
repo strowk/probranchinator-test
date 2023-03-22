@@ -31,7 +31,7 @@ fn main() {
             if analysis.0.is_fast_forward() {
                 println!("🚀  No confilcts: fast-forward merge is possible.");
             } else if analysis.0.is_normal() {
-                println!("🛠️  A normal merge is possible."); // ⚠️ // 🚧 // 💣
+                // println!("🛠️  A normal merge is possible."); // ⚠️ // 🚧 // 💣
                 let out_commit = repo.reference_to_annotated_commit(&our_head).unwrap();
                 check_normal_merge(&repo, &their_commit, &out_commit).unwrap();
 
