@@ -1,41 +1,4 @@
-// use git2::{Repository, MergeAnalysis};
-
-// fn main() {
-//     let repo = Repository::open(".").unwrap();
-//     let reference = repo.find_reference("refs/heads/master").unwrap();
-//     let analysis = repo.merge_analysis(&[&reference]).unwrap();
-
-//     if analysis.0.is_fast_forward() {
-//         println!("A fast-forward merge is possible.");
-//     } else if analysis.0.is_normal() {
-//         println!("A normal merge is possible.");
-//     } else if analysis.0.is_up_to_date() {
-//         println!("The branch is already up-to-date.");
-//     } else {
-//         println!("No merge is possible.");
-//     }
-// }
-
-// use git2::{MergeAnalysis, Repository};
-
-// fn main() {
-//     let repo = Repository::open("/path/to/repo").unwrap();
-//     let their_head = repo.find_reference("refs/heads/develop").unwrap();
-//     let our_head = repo.find_reference("refs/heads/feature/1").unwrap();
-//     let analysis = repo.merge_analysis_for_ref(&our_head, &their_head).unwrap();
-
-//     if analysis.0.is_fast_forward() {
-//         println!("A fast-forward merge is possible.");
-//     } else if analysis.0.is_normal() {
-//         println!("A normal merge is possible.");
-//     } else if analysis.0.is_up_to_date() {
-//         println!("The branch is already up-to-date.");
-//     } else {
-//         println!("No merge is possible.");
-//     }
-// }
-
-use git2::{MergeAnalysis, Repository};
+use git2::Repository;
 use std::env;
 
 fn main() {
@@ -60,12 +23,14 @@ fn main() {
         .unwrap();
 
     if analysis.0.is_fast_forward() {
-        println!("A fast-forward merge is possible.");
+        println!("There are conflicts: a fast-forward merge is possible.");
     } else if analysis.0.is_normal() {
-        println!("A normal merge is possible.");
+        println!("There are conflicts: a normal merge is possible.");
     } else if analysis.0.is_up_to_date() {
-        println!("The branch is already up-to-date.");
-    } else {
+        println!("No conflicts: the branches are already up-to-date.");
+    } else if analysis.0.is_none() {
         println!("No merge is possible.");
+    } else {
+        println!("Unknown merge analysis result.");
     }
 }
