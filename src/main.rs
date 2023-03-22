@@ -27,7 +27,7 @@ fn main() {
                 .merge_analysis_for_ref(&our_head, &[&their_commit])
                 .unwrap();
 
-            println!("Comparing {} with {}:", into_branch, from_branch);
+            println!("\nComparing {} with {}:", into_branch, from_branch);
             if analysis.0.is_fast_forward() {
                 println!("🚀  No confilcts: fast-forward merge is possible.");
             } else if analysis.0.is_normal() {
