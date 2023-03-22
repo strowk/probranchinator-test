@@ -9,6 +9,7 @@ fn main() {
     }
 
     let repo = Repository::open(".").unwrap();
+    let starting_head = repo.head().unwrap();
 
     for i in 1..args.len() {
         for j in i + 1..args.len() {
@@ -33,6 +34,15 @@ fn main() {
                 println!("🛠️ A normal merge is possible."); // ⚠️ // 🚧 // 💣
                 let out_commit = repo.reference_to_annotated_commit(&our_head).unwrap();
                 check_normal_merge(&repo, &their_commit, &out_commit).unwrap();
+
+                // this is to clean up the repo after the merge, which can leave dirty files
+                let starting_head_commit = starting_head.peel_to_commit().unwrap();
+                repo.reset(
+                    starting_head_commit.as_object(),
+                    git2::ResetType::Hard,
+                    None,
+                )
+                .unwrap();
             // TODO - figure out if there are conflicts
             } else if analysis.0.is_up_to_date() {
                 println!("✅ No conflicts: the branches are already up-to-date.");
