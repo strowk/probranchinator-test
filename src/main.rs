@@ -26,6 +26,7 @@ fn main() {
 
     if args.len() < 3 {
         args = get_sorted_branches(path).unwrap();
+        args.reverse();
 
         // this is cause normally first argument is the path to the executable
         // TODO: make this better
