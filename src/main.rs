@@ -3,6 +3,11 @@ use git2::{BranchType, Repository};
 use std::env;
 
 fn get_sorted_branches(repo_path: &str) -> Result<Vec<String>, git2::Error> {
+    // TODO: reverse the order of the branches so that the most recent ones are first
+    // and remove reverse() from main()
+
+    // TODO: take only recent f.e. 10 branches
+
     let repo = Repository::open(repo_path)?;
     let mut branches = repo
         .branches(Some(BranchType::Local))?
