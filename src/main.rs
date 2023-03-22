@@ -1,14 +1,49 @@
-use git2::Repository;
+use git2::{BranchType, Repository};
+
 use std::env;
 
+fn get_sorted_branches(repo_path: &str) -> Result<Vec<String>, git2::Error> {
+    let repo = Repository::open(repo_path)?;
+    let mut branches = repo
+        .branches(Some(BranchType::Local))?
+        .map(|b| b.unwrap())
+        .collect::<Vec<_>>();
+    branches.sort_by_key(|b| b.0.get().peel_to_commit().unwrap().committer().when());
+    Ok(branches
+        .into_iter()
+        .map(|(branch, _)| branch.name().unwrap().unwrap().to_string())
+        .collect())
+}
+
+// fn list_recent_branches(repo: &Repository) -> Vec<git2::Branch> {
+//     let repo = Repository::open(".").unwrap();
+//     let mut branches = repo
+//         .branches(Some(BranchType::Local))
+//         .unwrap()
+//         .map(|b| b.unwrap())
+//         .collect::<Vec<_>>();
+//     branches.sort_by_key(|b| b.0.get().peel_to_commit().unwrap().committer().when());
+//     let result: Vec<git2::Branch> = branches.into_iter().map(|b| b.0).collect();
+//     result
+//     // for (branch, _) in branches {
+//     //     println!("{}", branch.name().unwrap().unwrap());
+//     // }
+// }
+
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() < 3 {
+    let mut args: Vec<String> = env::args().collect();
+    let path = ".";
+
+    if args.len() == 1 {
         println!("Usage: {} <branch1> <branch2> ...", args[0]);
         return;
     }
 
-    let repo = Repository::open(".").unwrap();
+    if args.len() < 3 {
+        args = get_sorted_branches(path).unwrap();
+    }
+
+    let repo = Repository::open(path).unwrap();
     let starting_head = repo.head().unwrap();
 
     for i in 1..args.len() {
