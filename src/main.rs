@@ -15,21 +15,6 @@ fn get_sorted_branches(repo_path: &str) -> Result<Vec<String>, git2::Error> {
         .collect())
 }
 
-// fn list_recent_branches(repo: &Repository) -> Vec<git2::Branch> {
-//     let repo = Repository::open(".").unwrap();
-//     let mut branches = repo
-//         .branches(Some(BranchType::Local))
-//         .unwrap()
-//         .map(|b| b.unwrap())
-//         .collect::<Vec<_>>();
-//     branches.sort_by_key(|b| b.0.get().peel_to_commit().unwrap().committer().when());
-//     let result: Vec<git2::Branch> = branches.into_iter().map(|b| b.0).collect();
-//     result
-//     // for (branch, _) in branches {
-//     //     println!("{}", branch.name().unwrap().unwrap());
-//     // }
-// }
-
 fn main() {
     let mut args: Vec<String> = env::args().collect();
     let path = ".";
