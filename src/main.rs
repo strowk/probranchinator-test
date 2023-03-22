@@ -2,6 +2,9 @@ use git2::{BranchType, Repository};
 
 use std::env;
 
+// TODO: add clone operation to not avoid changing the working repository
+// TODO: add terminal UI
+
 fn get_sorted_branches(repo_path: &str) -> Result<Vec<String>, git2::Error> {
     // TODO: reverse the order of the branches so that the most recent ones are first
     // and remove reverse() from main()
