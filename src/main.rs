@@ -4,6 +4,7 @@ use std::env;
 
 // TODO: add clone operation to not avoid changing the working repository
 // TODO: add terminal UI
+// TODO: cleanup the code - remove the unwraps and add error handling
 
 fn get_sorted_branches(repo_path: &str) -> Result<Vec<String>, git2::Error> {
     // TODO: reverse the order of the branches so that the most recent ones are first
