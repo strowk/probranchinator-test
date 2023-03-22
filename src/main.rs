@@ -26,6 +26,10 @@ fn main() {
 
     if args.len() < 3 {
         args = get_sorted_branches(path).unwrap();
+
+        // this is cause normally first argument is the path to the executable
+        // TODO: make this better
+        args.insert(0, "dummy".to_string());
     }
 
     let repo = Repository::open(path).unwrap();
