@@ -29,9 +29,9 @@ fn main() {
 
             println!("Comparing {} with {}:", into_branch, from_branch);
             if analysis.0.is_fast_forward() {
-                println!("🚀 No confilcts: fast-forward merge is possible.");
+                println!("🚀  No confilcts: fast-forward merge is possible.");
             } else if analysis.0.is_normal() {
-                println!("🛠️ A normal merge is possible."); // ⚠️ // 🚧 // 💣
+                println!("🛠️  A normal merge is possible."); // ⚠️ // 🚧 // 💣
                 let out_commit = repo.reference_to_annotated_commit(&our_head).unwrap();
                 check_normal_merge(&repo, &their_commit, &out_commit).unwrap();
 
@@ -45,11 +45,11 @@ fn main() {
                 .unwrap();
             // TODO - figure out if there are conflicts
             } else if analysis.0.is_up_to_date() {
-                println!("✅ No conflicts: the branches are already up-to-date.");
+                println!("✅  No conflicts: the branches are already up-to-date.");
             } else if analysis.0.is_none() {
-                println!("No merge is possible.");
+                println!("❌  No merge is possible.");
             } else {
-                println!("❌ Unknown merge analysis result.");
+                println!("🤔  Unknown merge analysis result.");
             }
         }
     }
@@ -72,7 +72,7 @@ fn check_normal_merge(
         repo.checkout_index(Some(&mut idx), None)?;
         return Ok(());
     }
-    println!("🚀 Found conflicts, but can resolve them automatically.");
+    println!("🤝 Found conflicts, but can resolve them automatically.");
 
     return Ok(());
     // let result_tree = repo.find_tree(idx.write_tree_to(repo)?)?;
