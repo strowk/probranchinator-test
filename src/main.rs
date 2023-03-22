@@ -34,7 +34,7 @@ fn main() {
     let mut args: Vec<String> = env::args().collect();
     let path = ".";
 
-    if args.len() == 1 {
+    if args.len() == 2 {
         println!("Usage: {} <branch1> <branch2> ...", args[0]);
         return;
     }
